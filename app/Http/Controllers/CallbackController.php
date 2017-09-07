@@ -41,6 +41,28 @@ class CallbackController extends Controller
         } catch (InvalidEventSourceException $e) {
             return response()->json(['message' => 'Invalid source event request'],400);
         }
+        foreach ($events as $event) {
+            // USER info
+            $user_id = $event->getUserId();
+            $profileData = $bot->getProfile($user_id);
+
+            if ($profileData->isSucceeded()) {
+                $profile = $profileData->getJSONDecodedBody();
+            }
+
+            if (!($event instanceof MessageEvent)) {
+                Log::info('Non message event has come');
+                continue;
+            }
+            if (!($event instanceof TextMessage)) {
+                Log::info('Non text message has come');
+                continue;
+            }
+            // get Text
+            $replyText = $event->getText();
+            $resp = $bot->replyText($event->getReplyToken(), $replyText);
+            Log::info($resp->getHTTPStatus() . ': ' . $resp->getRawBody());
+        }
 
         return response()->json([], 200);
     }
