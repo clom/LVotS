@@ -14,7 +14,7 @@ class CreateVoteAnsTable extends Migration
     public function up()
     {
         Schema::create('vote_ans', function (Blueprint $table) {
-            $table->integer('user_id');
+            $table->string('user_id');
             $table->string('vote_id');
             $table->integer('no');
             $table->timestamps();

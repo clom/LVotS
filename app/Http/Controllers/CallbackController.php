@@ -21,8 +21,7 @@ use LINE\LINEBot\MessageBuilder\{MultiMessageBuilder,
                                  TextMessageBuilder};
 use LINE\LINEBot\ImagemapActionBuilder\{ImagemapMessageActionBuilder,AreaBuilder};
 
-// Redis
-use Predis\Client;
+
 
 $vote_img = env('LINE_BOT_VOTE_IMG');
 
@@ -71,7 +70,7 @@ class CallbackController extends Controller
             if($replyText == '!vote')
                 $replyObject = $this->genObject();
             else
-                $replyObject = $this->swText($replyText);
+                $replyObject = $this->swText($replyText, $profile);
 
             $resp = $bot->replyMessage($event->getReplyToken(), $replyObject);
             Log::info($resp->getHTTPStatus() . ': ' . $resp->getRawBody());
@@ -80,8 +79,21 @@ class CallbackController extends Controller
         return response()->json(['msg' => $resp->getRawBody()], $resp->getHTTPStatus());
     }
 
-    private function swText($text){
-        $msg = new TextMessageBuilder($text);
+    private function swText($text, $profile){
+        $msg = new MultiMessageBuilder();
+        $userName = $profile['displayName'];
+        $userId = $profile['userId'];
+
+        if(ctype_digit($text)){
+            if(!$this->isVoted($userId)){
+                $value = $this->voteAction($text, $userId);
+                $msg->add(new TextMessageBuilder($userName .'さんの投票を受け付けました。'));
+                $msg->add(new TextMessageBuilder('投票したもの: '.$value));
+            } else
+                $msg->add(new TextMessageBuilder($userName.'さんの投票は既に行われています。'));
+        } else {
+            $msg->add(new TextMessageBuilder($text));
+        }
         return $msg;
     }
 
