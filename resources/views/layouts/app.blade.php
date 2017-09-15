@@ -10,8 +10,29 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="{{ asset('js/fakeLoader.js') }}"></script>
+
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fakeLoader.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cairo:900" rel="stylesheet">
+    <style>
+        .navbar-default{
+            background-color: #fcf8e3;
+        }
+        .navbar-brand {
+            font-family: 'Cairo', sans-serif;
+        }
+        body {
+            background-color: #383a5a;
+        }
+
+    </style>
 </head>
 <body>
     <div id="app">
@@ -52,6 +73,9 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ route('add') }}">Add Vote</a></li>
+                                    <li><a href="{{ route('list') }}">Vote List</a></li>
+                                    <li><a href="{{ route('adm') }}">Admin List</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -73,8 +97,6 @@
 
         @yield('content')
     </div>
-
-    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

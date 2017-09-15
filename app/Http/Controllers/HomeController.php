@@ -25,4 +25,20 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function add()
+    {
+        return view('add');
+    }
+
+    public function list()
+    {
+        return view('list');
+    }
+
+    public function view($id)
+    {
+        return view('view', ['id' => $id]);
+    }
+
 }
