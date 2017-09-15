@@ -11,17 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'GuestController@index')->name('index');
 Route::get('/list', 'HomeController@list')->name('list');
 Route::get('/admin', 'Adm\ViewController@info')->name('adm');
 Route::get('/add', 'HomeController@add')->name('add');
-Route::get('/view/{id}', 'HomeController@view');
+Route::get('/view/{id}', 'GuestController@view');
 //Route::get();
 
 // api

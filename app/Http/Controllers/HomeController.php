@@ -21,10 +21,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('home');
-    }
 
     public function add()
     {
@@ -34,11 +30,6 @@ class HomeController extends Controller
     public function list()
     {
         return view('list');
-    }
-
-    public function view($id)
-    {
-        return view('view', ['id' => $id]);
     }
 
 }
