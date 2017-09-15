@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // LineBot
 Route::get('/resize/{size}', 'ResizeController@index');
 Route::post('/callback', 'CallbackController@index');
+Route::get('/nowvote', 'UserVoteController@info');

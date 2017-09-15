@@ -27,13 +27,13 @@ class Controller extends BaseController
 
 
     public function voteInformation(){
-        $response = [];
+        $response = (object)Array();
 
         $id = $this->getVoteID();
 
         if($id != null){
             $response->info = DB::table('vote_info')->where('id', $id)->first();
-            //$response->menu = DB::table('vote_menu')->where('vote_id', $id)->get();
+            $response->menu = DB::table('vote_menu')->where('vote_id', $id)->get();
         } else {
             return null;
         }
