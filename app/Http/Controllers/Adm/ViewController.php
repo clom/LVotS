@@ -17,4 +17,9 @@ class ViewController extends Controller
     {
         return view('admin');
     }
+
+    public function edit($id)
+    {
+        return view('edit', ['id' => $id]);
+    }
 }
