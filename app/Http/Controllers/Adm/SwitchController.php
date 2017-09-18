@@ -15,7 +15,7 @@ class SwitchController extends Controller
     }
 
     public function update(Request $req){
-        $redis = new Client('tcp://'.env('REDIS_URL').':'.env('REDIS_PORT'));
+        $redis = new Client('tcp://'.env('REDIS_HOST').':'.env('REDIS_PORT'));
         $request_data = $req->json()->all();
         $prefix = Controller::LB_NOWVOTE;
         $id = $request_data['id'];

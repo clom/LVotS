@@ -48,10 +48,7 @@
                 dataType: 'json',
                 success: function (data) {
                     var info = data.info;
-                    var txt = '';
-                    $.each(info, function (key, val) {
-                        txt = '<a href="/view/' + val.id + '">' + val.title + '</a>';
-                    });
+                    var txt = '<a href="/view/' + info.id + '">' + info.title + '</a>';
                     $('#v_title').html(txt);
                 },
                 error:  function(XMLHttpRequest, textStatus, errorThrown){

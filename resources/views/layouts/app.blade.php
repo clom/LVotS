@@ -21,12 +21,16 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fakeLoader.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cairo:900" rel="stylesheet">
+
     <style>
         .navbar-default{
             background-color: #fcf8e3;
         }
         .navbar-brand {
             font-family: 'Cairo', sans-serif;
+        }
+        .bg-success {
+            background-color: #28a745!important;
         }
         body {
             background-color: #383a5a;
