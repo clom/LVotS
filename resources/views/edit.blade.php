@@ -142,7 +142,7 @@
                    var menu = data.menu;
                    $('#v_title').val(info.title);
                    menu.forEach(function (no) {
-                       if(no.no === 1 || no.no === 2)
+                       if(no.no == 1 || no.no == 2)
                            $('#choice_'+ no.no).val(no.text);
                        else{
                            createModule(no.text);
