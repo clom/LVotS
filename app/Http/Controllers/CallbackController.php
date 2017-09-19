@@ -85,12 +85,20 @@ class CallbackController extends Controller
         $userId = $profile['userId'];
 
         if(ctype_digit($text)){
-            if(!$this->isVoted($userId)){
-                $value = $this->voteAction($text, $userId);
-                $msg->add(new TextMessageBuilder($userName .'さんの投票を受け付けました。'));
-                $msg->add(new TextMessageBuilder('投票したもの: '.$value));
-            } else
-                $msg->add(new TextMessageBuilder($userName.'さんの投票は既に行われています。'));
+            if($this->getVoteID() != null){
+                if(!$this->isVoted($userId)){
+                    $value = $this->voteAction($text, $userId);
+                    if($value == null)
+                        $msg->add(new TextMessageBuilder('選択肢にありません。'));
+                    else {
+                        $msg->add(new TextMessageBuilder($userName . 'さんの投票を受け付けました。'));
+                        $msg->add(new TextMessageBuilder('投票したもの: ' . $value));
+                    }
+                } else
+                    $msg->add(new TextMessageBuilder($userName.'さんの投票は既に行われています。'));
+            } else {
+                $msg->add(new TextMessageBuilder('現在投票は行われていません。'));
+            }
         } else {
             $msg->add(new TextMessageBuilder($text));
         }
