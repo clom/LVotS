@@ -16,7 +16,6 @@
                         <table class="table table-bordered">
                             <thead>
                             <th>Title</th>
-                            <th style="width: 15%">Vote Count</th>
                             </thead>
                             <tbody id="listVote"></tbody>
                         </table>
@@ -35,7 +34,7 @@
                 success: function (data) {
                     var table = '';
                     data.forEach(function(data){
-                        table = table + '<tr><td><a href="/view/' + data.id + '">'+data.title+'</a></td><td>'+data.vote_count+'</td></tr>';
+                        table = table + '<tr><td><a href="/view/' + data.id + '">'+data.title+'</a></td></tr>';
                         $('#listVote').html(table);
                     });
                 }

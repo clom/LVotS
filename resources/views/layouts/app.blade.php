@@ -11,7 +11,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script src="{{ asset('js/fakeLoader.js') }}"></script>
@@ -20,6 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fakeLoader.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/6a7bdbcf1f.css">
     <link href="https://fonts.googleapis.com/css?family=Cairo:900" rel="stylesheet">
 
     <style>

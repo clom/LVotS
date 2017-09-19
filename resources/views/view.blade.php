@@ -10,6 +10,7 @@
 
                     <div class="panel-body">
                         <h3>Question: <span id="v_title"></span></h3>
+                        <h4><span id="ans"></span> votes</h4>
                         <hr>
                         <div id="menuList"></div>
                     </div>
@@ -50,6 +51,7 @@
                     var menu = data.menu;
                     var answer = data.ansCount;
                     $('#v_title').text(info.title);
+                    $('#ans').text(answer);
                     menu.forEach(function (no) {
                         menuCount++;
                         var avg = no.vote_count / answer * 100

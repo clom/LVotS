@@ -11,9 +11,7 @@ class UserVoteController extends Controller
     {
         // information Data
         $respData = DB::table('vote_info')
-            ->join('vote_ans', 'vote_info.id', '=', 'vote_ans.vote_id')
-            ->groupBy('vote_ans.vote_id')
-            ->select('vote_info.id', 'vote_info.title', DB::raw("COUNT(*) as vote_count"))
+            ->select('vote_info.id', 'vote_info.title')
             ->get();
 
         return response()->json($respData,200);
