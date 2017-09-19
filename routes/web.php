@@ -11,6 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::get('/', 'GuestController@index')->name('index');
+Route::get('/list', 'HomeController@list')->name('list');
+Route::get('/admin', 'Adm\ViewController@info')->name('adm');
+Route::get('/add', 'HomeController@add')->name('add');
+Route::get('/view/{id}', 'GuestController@view');
+Route::get('/edit/{id}','Adm\ViewController@edit');
+
+// api
+Route::group(['prefix' => 'api'], function () {
+    Route::resource('/adm/vote', 'Adm\VoteController');
+    Route::put('/adm/switch/vote', 'Adm\SwitchController@update');
+    Route::put('/adm/switch/adm', 'Adm\SwitchController@adm');
+    Route::get('/adm/user/', 'Adm\UserController@index');
+
+// VoteData
+    Route::get('/list/vote', 'UserVoteController@index');
+    Route::get('/vote/{id}', 'UserVoteController@show');
+
 });

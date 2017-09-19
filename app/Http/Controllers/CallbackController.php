@@ -15,14 +15,19 @@ use LINE\LINEBot\Event\{MessageEvent,
 use LINE\LINEBot\Exception\{InvalidEventRequestException,
                             InvalidSignatureException,
                             InvalidEventSourceException};
-use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
+use LINE\LINEBot\MessageBuilder\{MultiMessageBuilder,
+                                 ImagemapMessageBuilder,
+                                 Imagemap\BaseSizeBuilder,
+                                 TextMessageBuilder};
+use LINE\LINEBot\ImagemapActionBuilder\{ImagemapMessageActionBuilder,AreaBuilder};
 
-// Redis
-use Predis\Client;
 
+
+$vote_img = env('LINE_BOT_VOTE_IMG');
 
 class CallbackController extends Controller
 {
+
     public function index(Request $req){
         $secret = env('LINE_CHANNEL_SECRET');
         $token = env('LINE_CHANNEL_ACCESS_TOKEN');
@@ -60,10 +65,56 @@ class CallbackController extends Controller
             }
             // get Text
             $replyText = $event->getText();
-            $resp = $bot->replyText($event->getReplyToken(), $replyText);
+
+            // vote System.
+            if($replyText == '!vote')
+                $replyObject = $this->genObject();
+            else
+                $replyObject = $this->swText($replyText, $profile);
+
+            $resp = $bot->replyMessage($event->getReplyToken(), $replyObject);
             Log::info($resp->getHTTPStatus() . ': ' . $resp->getRawBody());
         }
 
-        return response()->json([], 200);
+        return response()->json(['msg' => $resp->getRawBody()], $resp->getHTTPStatus());
+    }
+
+    private function swText($text, $profile){
+        $msg = new MultiMessageBuilder();
+        $userName = $profile['displayName'];
+        $userId = $profile['userId'];
+
+        if(ctype_digit($text)){
+            if(!$this->isVoted($userId)){
+                $value = $this->voteAction($text, $userId);
+                $msg->add(new TextMessageBuilder($userName .'さんの投票を受け付けました。'));
+                $msg->add(new TextMessageBuilder('投票したもの: '.$value));
+            } else
+                $msg->add(new TextMessageBuilder($userName.'さんの投票は既に行われています。'));
+        } else {
+            $msg->add(new TextMessageBuilder($text));
+        }
+        return $msg;
+    }
+
+    private function genObject(){
+        //$msg = new MultiMessageBuilder();
+
+        $msg = new ImagemapMessageBuilder('https://'.$_SERVER['HTTP_HOST'].'/api/resize',
+                                             'vote icon',
+                                             new BaseSizeBuilder(1040,1040),
+                                            [
+                                                new ImagemapMessageActionBuilder('1',new AreaBuilder(0,0,346,346)),
+                                                new ImagemapMessageActionBuilder('2',new AreaBuilder(347,0,346,346)),
+                                                new ImagemapMessageActionBuilder('3',new AreaBuilder(695,0,346,346)),
+                                                new ImagemapMessageActionBuilder('4',new AreaBuilder(0,347,346,346)),
+                                                new ImagemapMessageActionBuilder('5',new AreaBuilder(347,347,346,346)),
+                                                new ImagemapMessageActionBuilder('6',new AreaBuilder(695,347,346,346)),
+                                                new ImagemapMessageActionBuilder('7',new AreaBuilder(0,695,346,346)),
+                                                new ImagemapMessageActionBuilder('8',new AreaBuilder(347,695,346,346)),
+                                                new ImagemapMessageActionBuilder('9',new AreaBuilder(695,695,346,346))
+                                            ]);
+
+        return $msg;
     }
 }
