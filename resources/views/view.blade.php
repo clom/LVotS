@@ -22,7 +22,10 @@
         <div class="col-md-2">
             <label id="q_0">Ans1</label>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-2">
+            <label id="val_0"></label>
+        </div>
+        <div class="col-md-8">
             <div class="progress">
                 <span id="pg_0" class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></span>
             </div>
@@ -52,6 +55,7 @@
                         var avg = no.vote_count / answer * 100
                         md = $('#menu_0').clone().attr({id: 'menu_'+menuCount });
                         md.find('#q_0').attr({id: 'q_'+menuCount }).text(no.text);
+                        md.find('#val_0').attr({id: 'val_'+menuCount }).text(no.vote_count);
                         md.find('#pg_0').attr({id: 'pg_'+menuCount}).css('width', avg+'%');
                         md.appendTo('#menuList').show();
                     });
@@ -73,6 +77,7 @@
                     menu.forEach(function (no) {
                         var avg = no.vote_count / answer * 100
                         $('#pg_'+no.no).css('width', avg+'%');
+                        $('#val_'+no.no).text(no.vote_count);
                     });
                 },
                 error:  function(XMLHttpRequest, textStatus, errorThrown){
