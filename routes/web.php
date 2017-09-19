@@ -18,7 +18,7 @@ Route::get('/list', 'HomeController@list')->name('list');
 Route::get('/admin', 'Adm\ViewController@info')->name('adm');
 Route::get('/add', 'HomeController@add')->name('add');
 Route::get('/view/{id}', 'GuestController@view');
-//Route::get();
+Route::get('/edit/{id}','Adm\ViewController@edit');
 
 // api
 Route::group(['prefix' => 'api'], function () {
