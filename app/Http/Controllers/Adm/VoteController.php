@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Auth;
 
 class VoteController extends Controller
 {
@@ -15,6 +16,9 @@ class VoteController extends Controller
     }
 
     public function index(Request $req){
+        if(!(Auth::user()->checkAdmin())){
+            return response()->json(['msg' => 'No Auth'],403);
+        }
         // information Data
         $respData = DB::table('vote_info')
             ->select('vote_info.id', 'vote_info.title')
@@ -24,6 +28,9 @@ class VoteController extends Controller
     }
 
     public function show(Request $req, $id){
+        if(!(Auth::user()->checkAdmin())){
+            return response()->json(['msg' => 'No Auth'],403);
+        }
         $respData = (object)Array();
         // information Data
         $i_data = DB::table('vote_info')->where('id', $id)->first();
@@ -42,6 +49,9 @@ class VoteController extends Controller
     }
 
     public function store(Request $req){
+        if(!(Auth::user()->checkAdmin())){
+            return response()->json(['msg' => 'No Auth'],403);
+        }
         $request_data = $req->json()->all();
         if(empty($request_data)){
             return response()->json(['msg' => 'no Request Data.'], 400);
@@ -74,6 +84,9 @@ class VoteController extends Controller
     }
 
     public function update(Request $req, $id){
+        if(!(Auth::user()->checkAdmin())){
+            return response()->json(['msg' => 'No Auth'],403);
+        }
         $request_data = $req->json()->all();
         if(empty($request_data)){
             return response()->json(['msg' => 'no Request Data.'], 400);
@@ -117,9 +130,17 @@ class VoteController extends Controller
     }
 
     public function destroy(Request $req, $id){
+        if(!(Auth::user()->checkAdmin())){
+            return response()->json(['msg' => 'No Auth'],403);
+        }
+        $nowId = $this->getVoteID();
         $data = DB::table('vote_info')->where('id', $id)->first();
         if(empty($data))
             return response()->json(['msg' => 'No Vote Data.'],400);
+
+        if($nowId == $id){
+            return response()->json(['msg' => 'Now Voting.'],400);
+        }
 
         try{
             // DEL Menu

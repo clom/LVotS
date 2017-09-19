@@ -16,7 +16,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     const LB_NOWVOTE = 'LB_nowVote';
 
-    private function getVoteID(){
+    public function getVoteID(){
         $redis = new Client('tcp://'.env('REDIS_HOST').':'.env('REDIS_PORT'));
         $prefix = Controller::LB_NOWVOTE;
         if($redis->exists($prefix))

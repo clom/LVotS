@@ -77,9 +77,11 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    @if(Auth::user()->checkAdmin())
                                     <li><a href="{{ route('add') }}">Add Vote</a></li>
                                     <li><a href="{{ route('list') }}">Vote List</a></li>
                                     <li><a href="{{ route('adm') }}">Admin List</a></li>
+                                    @endif
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

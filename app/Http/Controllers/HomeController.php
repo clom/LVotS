@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,11 +25,19 @@ class HomeController extends Controller
 
     public function add()
     {
+        if(!(Auth::user()->checkAdmin())){
+            return abort(403, 'No Admin');
+        }
+
         return view('add');
     }
 
     public function list()
     {
+        if(!(Auth::user()->checkAdmin())){
+            return abort(403, 'No Admin');
+        }
+
         return view('list');
     }
 

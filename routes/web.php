@@ -25,6 +25,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::resource('/adm/vote', 'Adm\VoteController');
     Route::put('/adm/switch/vote', 'Adm\SwitchController@update');
     Route::put('/adm/switch/adm', 'Adm\SwitchController@adm');
+    Route::get('/adm/user/', 'Adm\UserController@index');
 
 // VoteData
     Route::get('/list/vote', 'UserVoteController@index');
