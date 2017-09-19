@@ -32,7 +32,7 @@
                 success: function (data) {
                     var table = '';
                     data.forEach(function(data){
-                        table = table + '<tr><td><a href="/view/'+ data.id +'">'+data.title+'</a></td><td><button class="btn btn-default" onclick="changeVote(\''+ data.id+'\')">投票開始・終了</button><span>&nbsp;</span><a type="button" class="btn btn-primary" href="/edit/'+data.id+'">編集</a><span>&nbsp;</span><button class="btn btn-danger" onclick="deleteVote(\''+ data.id+'\')">削除</button></td></tr>';
+                        table = table + '<tr><td><a href="/view/'+ data.id +'">'+data.title+'</a></td><td><button class="btn btn-default" onclick="changeVote(\''+ data.id+'\')">Vote Start/End</button><span>&nbsp;</span><a type="button" class="btn btn-primary" href="/edit/'+data.id+'">Edit</a><span>&nbsp;</span><button class="btn btn-danger" onclick="deleteVote(\''+ data.id+'\')">Delete</button></td></tr>';
                         $('#listvote').html(table);
                     });
                 }
