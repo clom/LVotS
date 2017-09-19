@@ -45,6 +45,10 @@ class Controller extends BaseController
         $id = $this->getVoteID();
 
         if($id != null){
+            $menuData = DB::table('vote_menu')->where('vote_id', $id)->where('no', $num)->first();
+            if(empty($menuData))
+                return null;
+
             DB::table('vote_ans')->insert([
                 'vote_id' => $id,
                 'user_id' => $userId,
@@ -52,7 +56,6 @@ class Controller extends BaseController
                 'created_at' => date('Y-m-d H:i:s', strtotime('+9 hour')),
                 'updated_at' => date('Y-m-d H:i:s', strtotime('+9 hour')),
             ]);
-            $menuData = DB::table('vote_menu')->where('vote_id', $id)->where('no', $num)->first();
             return $menuData->text;
         } else {
             return null;

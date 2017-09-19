@@ -54,7 +54,10 @@
                     $('#ans').text(answer);
                     menu.forEach(function (no) {
                         menuCount++;
-                        var avg = no.vote_count / answer * 100
+                        if(answer !== 0)
+                            var avg = no.vote_count / answer * 100;
+                        else
+                            var avg = 0;
                         md = $('#menu_0').clone().attr({id: 'menu_'+menuCount });
                         md.find('#q_0').attr({id: 'q_'+menuCount }).text(no.text);
                         md.find('#val_0').attr({id: 'val_'+menuCount }).text(no.vote_count);
@@ -77,7 +80,10 @@
                     var menu = data.menu;
                     var answer = data.ansCount;
                     menu.forEach(function (no) {
-                        var avg = no.vote_count / answer * 100
+                        if(answer !== 0)
+                            var avg = no.vote_count / answer * 100;
+                        else
+                            var avg = 0;
                         $('#pg_'+no.no).css('width', avg+'%');
                         $('#val_'+no.no).text(no.vote_count);
                     });
