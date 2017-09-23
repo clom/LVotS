@@ -38,5 +38,12 @@ $ php artisan migrate
 $ php artisan serve
 ```
 
+# Get Administrator
+If you Created First Account, please Access this link.
+
+```
+http://path/api/adm/init?k={.env key}
+```
+
 # License
 This System is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
