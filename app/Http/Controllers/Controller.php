@@ -18,6 +18,7 @@ class Controller extends BaseController
 
     public function getVoteID(){
         $redis = new Client('tcp://'.env('REDIS_HOST').':'.env('REDIS_PORT'));
+        $redis->auth(env('REDIS_PASSWORD'));
         $prefix = Controller::LB_NOWVOTE;
         if($redis->exists($prefix))
             return $redis->get($prefix);
