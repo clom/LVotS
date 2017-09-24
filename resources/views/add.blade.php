@@ -117,6 +117,18 @@
            return data;
        }
 
+       function checkEmpty(){
+           if($('#v_title').val() == '')
+               return false;
+           for(var i=0;i<count;i++){
+               var j = i + 1;
+               var o = $('#choice_'+j).val();
+               if(o == '')
+                   return false;
+           }
+           return true;
+       }
+
         $(function() {
             $.ajaxSetup({
                 headers: {
@@ -126,6 +138,13 @@
             $('#vote_ask').submit(function (event) {
                 // HTMLでの送信をキャンセル
                 event.preventDefault();
+
+                // empty check.
+                if(!checkEmpty()){
+                    alert('Form EMPTY.');
+                    return;
+                }
+
                 // 操作対象のフォーム要素を取得
                 var $form = $(this);
                 // 送信ボタンを取得
