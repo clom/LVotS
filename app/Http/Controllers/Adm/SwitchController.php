@@ -21,6 +21,7 @@ class SwitchController extends Controller
             return response()->json(['msg' => 'No Auth'],403);
         }
         $redis = new Client('tcp://'.env('REDIS_HOST').':'.env('REDIS_PORT'));
+        $redis->auth(env('REDIS_PASSWORD'));
         $request_data = $req->json()->all();
         $prefix = Controller::LB_NOWVOTE;
         $id = $request_data['id'];
