@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // Request
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 // LINE
 use LINE\LINEBot;
@@ -107,8 +108,9 @@ class CallbackController extends Controller
 
     private function genObject(){
         //$msg = new MultiMessageBuilder();
+        $uid = str_replace("-", "", Uuid::uuid1()->toString());
 
-        $msg = new ImagemapMessageBuilder('https://'.$_SERVER['HTTP_HOST'].'/api/resize',
+        $msg = new ImagemapMessageBuilder('https://'.$_SERVER['HTTP_HOST'].'/api/'.$uid.'/resize',
                                              'vote icon',
                                              new BaseSizeBuilder(1040,1040),
                                             [
